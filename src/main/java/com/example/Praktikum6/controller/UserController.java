@@ -11,9 +11,10 @@ import java.util.List;
 public class UserController {
     private static List<User> listMahasiswa = new ArrayList<>();
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
+    // Menambahkan rute utama agar langsung diarahkan ke halaman login
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/login";
     }
 
     @PostMapping("/login")
