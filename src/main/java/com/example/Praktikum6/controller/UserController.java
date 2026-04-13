@@ -1,18 +1,15 @@
 package com.example.Praktikum6.controller;
 
+import org.springframework.ui.Model;
 import com.example.Praktikum6.model.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class UserController {
-
-    // Data bersifat temporary (hilang saat server mati)
-    private List<User> userList = new ArrayList<>();
+public class Usercontroller {
+    private static List<User> listMahasiswa = new ArrayList<>();
 
     @GetMapping("/login")
     public String loginPage() {
@@ -20,18 +17,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
-        // Sesuai modul: username = admin, password = nim masing-masing
-        if ("admin".equals(username)) {
+    public String doLogin(@RequestParam String username, @RequestParam String password) {
+        if (username.equals("admin") && password.equals("20230140091")) {
             return "redirect:/home";
         }
-        model.addAttribute("error", "Username atau Password salah!");
-        return "login";
+        return "redirect:/login?error";
     }
-
     @GetMapping("/home")
-    public String home(Model model) {
-        model.addAttribute("users", userList);
+    public String homePage(Model model) {
+        model.addAttribute("listMhs", listMahasiswa);
         return "home";
     }
 
@@ -41,9 +35,17 @@ public class UserController {
         return "form";
     }
 
-    @PostMapping("/form")
-    public String submitForm(@ModelAttribute User user) {
-        userList.add(user);
+    @PostMapping("/submitForm")
+    public String submitData(@ModelAttribute User user) {
+        listMahasiswa.add(user); // Menambah data ke list temporary
         return "redirect:/home";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        listMahasiswa.clear(); // Opsional: hapus data saat logout
+        return "redirect:/login";
+    }
+
 }
+
