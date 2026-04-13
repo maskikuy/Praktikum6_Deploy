@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class Usercontroller {
+public class UserController {
     private static List<User> listMahasiswa = new ArrayList<>();
 
     @GetMapping("/login")
@@ -18,7 +18,7 @@ public class Usercontroller {
 
     @PostMapping("/login")
     public String doLogin(@RequestParam String username, @RequestParam String password) {
-        if (username.equals("admin") && password.equals("20230140091")) {
+        if (username.equals("admin") && password.equals("20230140060")) {
             return "redirect:/home";
         }
         return "redirect:/login?error";
