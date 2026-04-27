@@ -1,32 +1,44 @@
 package com.example.Praktikum6.controller;
 
-import org.springframework.ui.Model;
 import com.example.Praktikum6.model.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class UserController {
-    private static List<User> listMahasiswa = new ArrayList<>();
 
-    // Menambahkan rute utama agar langsung diarahkan ke halaman login
+    // Data bersifat temporary
+    private List<User> userList = new ArrayList<>();
+
+    // Tambahan agar localhost:8080 langsung diarahkan ke halaman login
     @GetMapping("/")
     public String index() {
         return "redirect:/login";
     }
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
     @PostMapping("/login")
-    public String doLogin(@RequestParam String username, @RequestParam String password) {
-        if (username.equals("admin") && password.equals("20230140060")) {
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+        // Password sesuaikan dengan NIM kamu
+        // Gunakan NIM kamu sebagai password (contoh: 20210140001)
+        if ("admin".equals(username) && "20210140001".equals(password)) {
             return "redirect:/home";
         }
-        return "redirect:/login?error";
+        model.addAttribute("error", "Username atau Password salah!");
+        return "login";
     }
+
     @GetMapping("/home")
-    public String homePage(Model model) {
-        model.addAttribute("listMhs", listMahasiswa);
+    public String home(Model model) {
+        model.addAttribute("users", userList);
         return "home";
     }
 
@@ -36,17 +48,9 @@ public class UserController {
         return "form";
     }
 
-    @PostMapping("/submitForm")
-    public String submitData(@ModelAttribute User user) {
-        listMahasiswa.add(user); // Menambah data ke list temporary
+    @PostMapping("/form")
+    public String submitForm(@ModelAttribute User user) {
+        userList.add(user);
         return "redirect:/home";
     }
-
-    @GetMapping("/logout")
-    public String logout() {
-        listMahasiswa.clear(); // Opsional: hapus data saat logout
-        return "redirect:/login";
-    }
-
 }
-

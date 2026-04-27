@@ -1,15 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Praktikum 6</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>Selamat Datang!</h1>
-<p>Data yang Anda masukkan:</p>
-<ul>
-    <li>Username: <span th:text="${user.username}"></span></li>
-    <li>Email: <span th:text="${user.email}"></span></li>
-</ul>
-<a href="/login">Logout</a>
+
+<header>
+    <div class="nav-container">
+        <div class="logo">Praktikum 6</div>
+        <form action="/login" method="get">
+            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+        </form>
+    </div>
+</header>
+
+<main class="container">
+    <div class="card">
+        <h2>jika "CINTA ITU BUTA"</h2>
+        <p>buat apa ada bikini!</p>
+        <img th:src="@{/images/foto.jpeg}" alt="Welcome Image" class="featured-img">
+        
+        <div style="margin-top: 1rem;">
+            <a href="/form" class="btn">Input Data Mahasiswa</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Data Mahasiswa</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>NIM</th>
+                    <th>Jenis Kelamin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="4" style="text-align: center;">Belum ada data</td>
+                </tr>
+                <tr th:each="user, stat : ${users}">
+                    <td th:text="${stat.count}">1</td>
+                    <td th:text="${user.nama}">Nama</td>
+                    <td th:text="${user.nim}">NIM</td>
+                    <td th:text="${user.jenisKelamin}">Jenis Kelamin</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
 </body>
 </html>

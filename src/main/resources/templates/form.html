@@ -1,21 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registrasi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data | Praktikum 6</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h2>Form Pendaftaran</h2>
-<form th:action="@{/submitForm}" th:object="${user}" method="post">
-    <label>Username:</label>
-    <input type="text" th:field="*{username}" /><br>
 
-    <label>Email:</label>
-    <input type="email" th:field="*{email}" /><br>
+<header>
+    <div class="nav-container">
+        <div class="logo">Praktikum 6</div>
+        <a href="/home" class="btn btn-secondary">Back to Home</a>
+    </div>
+</header>
 
-    <label>Password:</label>
-    <input type="password" th:field="*{password}" /><br>
+<main class="container">
+    <div class="card" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h2>Form Input Mahasiswa</h2>
+        <form action="/form" method="post" th:object="${user}">
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" th:field="*{nama}" placeholder="Masukkan nama lengkap" required>
+            </div>
 
-    <button type="submit">Kirim</button>
-</form>
+            <div class="form-group">
+                <label>NIM</label>
+                <input type="text" th:field="*{nim}" placeholder="Masukkan NIM" required>
+            </div>
+
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" th:field="*{jenisKelamin}" value="Laki-laki" required>
+                        <span>Laki-laki</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" th:field="*{jenisKelamin}" value="Perempuan" required>
+                        <span>Perempuan</span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button type="submit" style="width: 100%;">Simpan Data</button>
+            </div>
+        </form>
+    </div>
+</main>
+
 </body>
 </html>
