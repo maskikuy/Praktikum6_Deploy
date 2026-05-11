@@ -1,18 +1,19 @@
 package com.example.Praktikum6.controller;
 
 import com.example.Praktikum6.model.User;
+import com.example.Praktikum6.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class UserController {
 
-    // Data bersifat temporary
-    private List<User> userList = new ArrayList<>();
+    @Autowired
+    private UserRepository userRepository;
 
     // Tambahan agar localhost:8080 langsung diarahkan ke halaman login
     @GetMapping("/")
@@ -38,7 +39,7 @@ public class UserController {
 
     @GetMapping("/home")
     public String home(Model model) {
-        model.addAttribute("users", userList);
+        model.addAttribute("users", userRepository.findAll());
         return "home";
     }
 
@@ -50,7 +51,7 @@ public class UserController {
 
     @PostMapping("/form")
     public String submitForm(@ModelAttribute User user) {
-        userList.add(user);
+        userRepository.save(user);
         return "redirect:/home";
     }
 }
